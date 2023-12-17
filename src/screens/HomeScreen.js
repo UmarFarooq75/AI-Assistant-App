@@ -86,7 +86,6 @@ const HomeScreen = () => {
             contentContainerStyle={{ flexGrow: 1 }}
             bounces={false}
             showsVerticalScrollIndicator={false}
-            
           >
             {/* Features || Messages */}
             {messages.length > 0 ? (
@@ -147,8 +146,8 @@ const HomeScreen = () => {
                       }
                     })}
                     {loading ? (
-                      <View className="flex-row justify-start m-1 mx-3">
-                        <View className="p-2 flex rounded-2xl bg-emerald-100 rounded-tl-none ">
+                      <View className="flex-row justify-start">
+                        <View className="p-2 flex rounded-2xl bg-emerald-100 rounded-tl-none m-1 mx-3">
                           <Image
                             source={require("../../assets/images/load-35.gif")}
                             style={{ width: wp(5), height: hp(3) }}
