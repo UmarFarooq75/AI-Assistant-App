@@ -5,6 +5,8 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Keyboard,
+  Platform,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -24,7 +26,30 @@ const HomeScreen = () => {
   const [messages, setMessages] = useState(dummyMessages);
   const scrollViewRef = useRef();
   const [loading, setLoading] = useState(false);
+  const [enablekeyboard, setEnabledKeyboard] = useState(false);
+  const keyboardDidShowListener = useRef(null);
+  const keyboardDidHideListener = useRef(null);
+  useEffect(() => {
+    // Add listeners for keyboard show and hide events
+    keyboardDidShowListener.current = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setEnabledKeyboard(true);
+      }
+    );
+    keyboardDidHideListener.current = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setEnabledKeyboard(false);
+      }
+    );
 
+    // Cleanup listeners when the component is unmounted
+    return () => {
+      keyboardDidShowListener.current.remove();
+      keyboardDidHideListener.current.remove();
+    };
+  }, []);
   const clear = () => {
     setResult("");
     console.log("resultclear", result);
@@ -80,6 +105,7 @@ const HomeScreen = () => {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={{ flex: 1 }}
           className="bg-neutral-300"
+          enabled={enablekeyboard}
         >
           <ScrollView
             ref={scrollViewRef}
@@ -91,7 +117,10 @@ const HomeScreen = () => {
             {messages.length > 0 ? (
               <View className="flex-1">
                 <View
-                  style={{ height: hp(97), width: wp(100) }}
+                  style={{
+                    height: enablekeyboard ? hp(50) : hp(80),
+                    width: wp(100),
+                  }}
                   className="bg-neutral-200 "
                 >
                   <ScrollView
@@ -168,6 +197,7 @@ const HomeScreen = () => {
           >
             <TextInput
               onChangeText={(value) => {
+                setEnabledKeyboard(true);
                 setResult(value);
               }}
               value={result}

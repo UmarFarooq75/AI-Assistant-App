@@ -1,7 +1,1 @@
-export const apiKey="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"
-export const dummyMessages = [
-    {
-        role: 'assistant',
-        content: "Hey, How may i assist you today."
-    },
-]
+export const apiKey="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"
