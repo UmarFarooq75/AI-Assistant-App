@@ -1,4 +1,4 @@
-export const apiKey="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"
+export const apiKey=""
 export const dummyMessages = [
     {
         role: 'assistant',
